@@ -1,70 +1,134 @@
-# Getting Started with Create React App
+# KindNet - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🌟 **A Modern Cyberbullying Detection Frontend Interface**
 
-## Available Scripts
+Built with React TypeScript and Tailwind CSS, KindNet Frontend provides a clean, intuitive interface for real-time cyberbullying detection and content moderation.
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+- **Real-time Text Analysis**: Instant cyberbullying detection as you type
+- **Modern UI/UX**: Clean, responsive design built with Tailwind CSS
+- **TypeScript Support**: Full type safety and enhanced developer experience
+- **Multi-language Detection**: Support for various languages and contexts
+- **Confidence Scoring**: Visual feedback with confidence levels
+- **Context Awareness**: Advanced analysis considering conversation context
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ Tech Stack
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Framework**: React 18 with TypeScript
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **Build Tool**: Create React App
+- **HTTP Client**: Fetch API
+- **Development**: Hot reload, ESLint, Prettier
 
-### `npm test`
+## 📦 Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+# Clone the repository
+git clone https://github.com/Yashborse4/KindNet-Frontend.git
+cd KindNet-Frontend
 
-### `npm run build`
+# Install dependencies
+npm install
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Start development server
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🔧 Environment Setup
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Copy the environment example file:
+```bash
+cp .env.example .env
+```
 
-### `npm run eject`
+2. Configure your backend API endpoint:
+```env
+REACT_APP_API_URL=http://localhost:5000
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🎨 Available Scripts
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- `npm start` - Start development server
+- `npm build` - Build for production
+- `npm test` - Run test suite
+- `npm run eject` - Eject from CRA (irreversible)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🔗 Backend Integration
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+This frontend connects to the KindNet Backend API. Make sure the backend is running on the configured endpoint.
 
-## Learn More
+**Backend Repository**: [KindNet-Backend](https://github.com/Yashborse4/KindNet-Backend)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 📱 Component Structure
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+src/
+├── components/          # React components
+│   ├── ChatApp.tsx     # Main chat interface
+│   ├── ChatHeader.tsx  # Header component
+│   ├── Message.tsx     # Message display
+│   └── MessageInput.tsx # Input component
+├── services/           # API services
+├── types/             # TypeScript definitions
+└── utils/            # Utility functions
+```
 
-### Code Splitting
+## 🎯 Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. **Text Input**: Type or paste text in the input field
+2. **Real-time Analysis**: See instant feedback on potential cyberbullying content
+3. **Confidence Levels**: Visual indicators show detection confidence
+4. **Context Understanding**: Advanced AI considers conversation context
+5. **Multi-language**: Supports detection in multiple languages
 
-### Analyzing the Bundle Size
+## 🔒 Features
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Text Analysis
+- Real-time cyberbullying detection
+- Sentiment analysis
+- Threat level assessment
+- Context-aware filtering
 
-### Making a Progressive Web App
+### User Interface
+- Responsive design for all devices
+- Dark/light mode support
+- Accessibility features
+- Smooth animations and transitions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Performance
+- Optimized bundle size
+- Lazy loading components
+- Efficient API calls
+- Caching strategies
 
-### Advanced Configuration
+## 🤝 Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/new-feature`
+3. Make your changes and commit: `git commit -m 'Add new feature'`
+4. Push to the branch: `git push origin feature/new-feature`
+5. Submit a pull request
 
-### Deployment
+## 📄 License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-### `npm run build` fails to minify
+## 🆘 Support
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+If you encounter any issues or have questions:
+
+1. Check the [Issues](https://github.com/Yashborse4/KindNet-Frontend/issues) page
+2. Create a new issue with detailed information
+3. Contact the maintainers
+
+## 🎉 Acknowledgments
+
+- React and TypeScript communities
+- Tailwind CSS for the beautiful styling system
+- All contributors and testers
+
+---
+
+**Made with ❤️ for a safer internet**
