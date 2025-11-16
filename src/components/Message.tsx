@@ -8,6 +8,9 @@ interface MessageProps {
   timestamp: Date;
   avatar?: string;
   username?: string;
+  isFlagged?: boolean;
+  confidence?: number;
+  severity?: string;
 }
 
 const Message: React.FC<MessageProps> = ({ 
@@ -15,7 +18,10 @@ const Message: React.FC<MessageProps> = ({
   isUser, 
   timestamp, 
   avatar, 
-  username 
+  username,
+  isFlagged,
+  confidence,
+  severity 
 }) => {
   const formatTime = (date: Date) => {
     return new Intl.DateTimeFormat('en-US', {
@@ -48,6 +54,43 @@ const Message: React.FC<MessageProps> = ({
               : 'rounded-bl-lg'
             }`}>
           <p className="text-sm leading-relaxed">{text}</p>
+
+          {/* Bullying risk indicator for assistant messages with analysis */}
+          {!isUser && typeof confidence === 'number' && (
+            <div className="mt-2 flex flex-col gap-1 text-[11px] text-white/60">
+              <div className="flex items-center gap-2">
+                {typeof severity === 'string' && severity !== 'none' && (
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-[10px] font-semibold border ${
+                      isFlagged
+                        ? 'bg-red-500/15 border-red-500/50 text-red-200'
+                        : 'bg-emerald-500/15 border-emerald-500/50 text-emerald-200'
+                    }`}
+                  >
+                    {severity.toUpperCase()}
+                  </span>
+                )}
+                <span>
+                  {Math.round((confidence ?? 0) * 100)}% bullying risk
+                </span>
+              </div>
+              <div className="w-32 h-1.5 rounded-full bg-white/10 overflow-hidden">
+                <div
+                  className={`h-full rounded-full transition-all duration-300 ${
+                    isFlagged
+                      ? 'bg-gradient-to-r from-red-500 to-orange-500'
+                      : 'bg-gradient-to-r from-emerald-400 to-sky-400'
+                  }`}
+                  style={{
+                    width: `${Math.max(
+                      0,
+                      Math.min(100, Math.round((confidence ?? 0) * 100))
+                    )}%`,
+                  }}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

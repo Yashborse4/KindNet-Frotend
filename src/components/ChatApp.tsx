@@ -13,6 +13,8 @@ interface MessageType {
   avatar?: string;
   isFlagged?: boolean;
   confidence?: number;
+  severity?: string;
+  riskIndicators?: string[];
 }
 
 interface ChatAppProps {
@@ -41,6 +43,8 @@ const ChatApp: React.FC<ChatAppProps> = ({ onSendMessage, className = "" }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [detectionEnabled, setDetectionEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
+  const [isBackendOnline, setIsBackendOnline] = useState<boolean | null>(null);
+  const [lastBackendCheck, setLastBackendCheck] = useState<Date | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Scroll to bottom when new messages arrive
@@ -52,8 +56,46 @@ const ChatApp: React.FC<ChatAppProps> = ({ onSendMessage, className = "" }) => {
     scrollToBottom();
   }, [messages]);
 
+  // Backend availability check every 20 seconds
+  useEffect(() => {
+    let isMounted = true;
+
+    const checkBackend = async () => {
+      try {
+        const available = await api.checkAvailability();
+        if (!isMounted) return;
+        setIsBackendOnline(available);
+        setLastBackendCheck(new Date());
+      } catch (error) {
+        console.error('Backend health check failed:', error);
+        if (!isMounted) return;
+        setIsBackendOnline(false);
+        setLastBackendCheck(new Date());
+      }
+    };
+
+    // Initial check immediately
+    checkBackend();
+
+    // Poll every 20 seconds
+    const intervalId = setInterval(checkBackend, 20000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(intervalId);
+    };
+  }, []);
+
   // API call for cyberbullying detection
-  const analyzeMessage = async (text: string): Promise<{ isFlagged: boolean; confidence: number; error?: string }> => {
+  type AnalysisResult = {
+    isFlagged: boolean;
+    confidence: number;
+    severity?: string;
+    riskIndicators?: string[];
+    error?: string;
+  };
+
+  const analyzeMessage = async (text: string): Promise<AnalysisResult> => {
     try {
       const { result, error } = await api.quickDetect(text, 0.7);
       
@@ -69,7 +111,9 @@ const ChatApp: React.FC<ChatAppProps> = ({ onSendMessage, className = "" }) => {
       if (result) {
         return {
           isFlagged: result.is_bullying,
-          confidence: result.confidence
+          confidence: result.confidence,
+          severity: result.severity,
+          riskIndicators: result.risk_indicators,
         };
       }
       
@@ -104,7 +148,7 @@ const ChatApp: React.FC<ChatAppProps> = ({ onSendMessage, className = "" }) => {
 
     try {
       // Analyze message for cyberbullying if detection is enabled
-      let analysisResult: { isFlagged: boolean; confidence: number; error?: string } = { isFlagged: false, confidence: 0 };
+      let analysisResult: AnalysisResult = { isFlagged: false, confidence: 0 };
       if (detectionEnabled) {
         analysisResult = await analyzeMessage(text);
       }
@@ -133,7 +177,7 @@ const ChatApp: React.FC<ChatAppProps> = ({ onSendMessage, className = "" }) => {
           responseText = `Warning: This message was flagged as potentially harmful (${Math.round(analysisResult.confidence * 100)}% confidence). Please be respectful in your communication.`;
         } else if (detectionEnabled) {
           responseIcon = '✅';
-          responseText = `Message analyzed and cleared.  harmful content detected (${Math.round((1 - analysisResult.confidence) * 100)}% Bullying Detected).`;
+          responseText = 'Message analyzed and cleared. No harmful content detected.';
         } else {
           responseIcon = '💬';
           responseText = 'Message received. Content analysis is currently disabled.';
@@ -146,7 +190,9 @@ const ChatApp: React.FC<ChatAppProps> = ({ onSendMessage, className = "" }) => {
           timestamp: new Date(),
           username: 'AI Safety Assistant',
           isFlagged: analysisResult.isFlagged,
-          confidence: analysisResult.confidence
+          confidence: analysisResult.confidence,
+          severity: analysisResult.severity,
+          riskIndicators: analysisResult.riskIndicators,
         };
 
         setMessages(prev => [...prev, botResponse]);
@@ -174,12 +220,17 @@ const ChatApp: React.FC<ChatAppProps> = ({ onSendMessage, className = "" }) => {
     setMessages(prev => [...prev, statusMessage]);
   };
 
+  const backendStatus: 'online' | 'offline' | 'checking' =
+    isBackendOnline === null ? 'checking' : isBackendOnline ? 'online' : 'offline';
+
   return (
-    <div className={`flex flex-col h-screen max-h-screen bg-transparent ${className}`}>
+    <div className={`flex flex-col h-full max-h-full bg-transparent ${className}`}>
       {/* Chat Header */}
       <ChatHeader 
         detectionEnabled={detectionEnabled}
         onToggleDetection={toggleDetection}
+        backendStatus={backendStatus}
+        lastBackendCheck={lastBackendCheck ?? undefined}
       />
 
       {/* Messages Container */}
@@ -193,6 +244,9 @@ const ChatApp: React.FC<ChatAppProps> = ({ onSendMessage, className = "" }) => {
             timestamp={message.timestamp}
             username={message.username}
             avatar={message.avatar}
+            isFlagged={message.isFlagged}
+            confidence={message.confidence}
+            severity={message.severity}
           />
         ))}
         
