@@ -7,10 +7,31 @@ export interface ApiResponse<T = any> {
 }
 
 // Detection Result Types
+export interface DetectedCategory {
+  category: string;
+  items: string[];
+  score: number;
+  severity: string;
+}
+
 export interface DetectionResult {
   is_bullying: boolean;
   confidence: number;
-  detected_categories?: string[];
+  // Enhanced detector fields
+  severity?: string;
+  detected_categories?: DetectedCategory[];
+  risk_indicators?: string[];
+  sentiment_analysis?: Record<string, number>;
+  context_analysis?: {
+    score: number;
+    indicators: string[];
+    detailed_analysis?: Record<string, any>;
+  };
+  intent_classification?: Record<string, number>;
+  detection_method?: string;
+  detected_languages?: string[];
+  detected_items?: any[];
+  // Legacy/compatibility fields used in some tools/tests
   flagged_words?: string[];
   explanation?: string;
   openai_used?: boolean;
