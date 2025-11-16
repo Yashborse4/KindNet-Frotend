@@ -2,6 +2,67 @@
 
 🌟 **A Modern Cyberbullying Detection Frontend Interface**
 
+A beautiful, modern React chat application with glass morphism design for cyber bullying detection. This frontend provides a responsive and elegant interface for real-time chat with AI-powered safety monitoring.
+
+## Features
+
+- 🎨 **Modern Glass Morphism Design** - Beautiful, translucent UI with rounded corners
+- 📱 **Fully Responsive** - Works seamlessly on desktop, tablet, and mobile devices
+- 🤖 **AI Safety Integration** - Ready for API integration with cyber bullying detection services
+- ⚡ **Real-time Chat** - Smooth message flow with typing indicators
+- 🛡️ **Safety Controls** - Toggle detection on/off with visual feedback
+- 🎯 **TypeScript Support** - Full type safety and better development experience
+- 🌈 **Tailwind CSS** - Modern utility-first styling with custom animations
+
+## Tech Stack
+
+- **React 18** with TypeScript
+- **Tailwind CSS** for styling
+- **Lucide React** for icons
+- **Custom Glass Morphism** effects
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (version 16 or higher)
+- npm or yarn
+
+### Installation
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Start the development server:**
+   ```bash
+   npm start
+   ```
+
+3. **Open your browser:**
+   Navigate to `http://localhost:3000`
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+```
+src/
+├── components/
+│   ├── ChatApp.tsx        # Main chat application component
+│   ├── ChatHeader.tsx     # Header with controls and status
+│   ├── Message.tsx        # Individual message component
+│   └── MessageInput.tsx   # Input field with send functionality
+├── App.tsx               # Main app component
+├── index.tsx            # React entry point
+└── index.css           # Global styles and Tailwind config
+```
+
 Built with React TypeScript and Tailwind CSS, KindNet Frontend provides a clean, intuitive interface for real-time cyberbullying detection and content moderation.
 
 ## 🚀 Features
