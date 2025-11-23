@@ -112,7 +112,7 @@ REACT_APP_API_URL=http://localhost:5000
 ## 🎨 Available Scripts
 
 - `npm start` - Start development server
-- `npm build` - Build for production
+- `npm run build` - Build for production
 - `npm test` - Run test suite
 - `npm run eject` - Eject from CRA (irreversible)
 
